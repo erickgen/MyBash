@@ -1,0 +1,60 @@
+1,在服务器安装GIT
+
+
+yum install git
+2,在服务器上安装gitosis
+
+
+yum install python python-setuptools
+git clone git://github.com/res0nat0r/gitosis.git
+cd gitosis
+python setup.py install
+3,在开发机上生成公钥
+
+
+ssh-keygen -t rsa
+scp ~/.ssh/id_rsa.pub root@xxx:/tmp/ # 把key传到服务器
+4，在服务器上初始化gitosis
+
+
+groupadd git
+adduser git # 新增一个git用户
+su git # 切换倒git用户下
+gitosis-init < /tmp/id_rsa.pub
+5,从客户端获得配置文件，并修改
+
+
+git clone git@xxx:gitosis-admin.git
+vi gitosis-admin/gitosis.conf #配置文件
+#编辑后保存
+cd gitosis-admin
+git add .
+git commit -a -m “test”
+git push
+6,在客户端新建一个项目并提交
+找开配置文件，增加如下项
+
+：
+[group project1] # 组名称
+writable = project1 # 项目名称
+members = xxx # 用户名
+git commit -a -m “add project1“
+git push
+7,在客户端完成项目的初始化
+
+
+mkdir /home/testuser/project1
+cd /home/testuser/project1
+git init
+git add .
+git commit -a -m "init project1"
+git push git@xxx:project1.git master
+8,如何在项目中添加新用户
+
+打开gitosis-admin/gitosis.conf为项目添加一个新用户
+
+把用户的公钥拷贝到gitosis-admin/keydir/,文件名和用户名相同
+
+提交代码后，用户即添加成功。
+
+完！

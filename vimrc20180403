@@ -1,0 +1,58 @@
+set nu
+set shortmess=atI
+syntax on
+
+color default
+"light、dark
+set background=dark
+
+set nocompatible
+set nobackup
+set confirm
+
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+
+set autoread
+set autoindent
+set smartindent
+
+set hlsearch
+set showmatch
+set ruler
+
+set nocompatible
+set foldenable
+set fdm=syntax
+set fdm=manual
+set novisualbell
+
+set laststatus=2
+
+set showcmd
+
+set fillchars=vert:/
+
+set fillchars=stl:/
+
+set fillchars=stlnc:/
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+autocmd InsertLeave * se nocul
+autocmd InsertEnter * se cul
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'fatih/vim-go'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
